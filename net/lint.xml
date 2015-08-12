@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+    <issue id="InlinedApi">
+        <ignore path="src/com/example/net/PopularActivity.java" />
+    </issue>
+    <issue id="NewApi">
+        <ignore path="src/com/example/fragment/CnbetaNews.java" />
+        <ignore path="src/com/example/net/MainActivity.java" />
+        <ignore path="src/com/example/net/NewsReader.java" />
+        <ignore path="src/com/example/util/SlidingTabLayout.java" />
+    </issue>
+    <issue id="ResourceAsColor">
+        <ignore path="src/com/example/fragment/CnbetaNews.java" />
+        <ignore path="src/com/example/fragment/CnbetaTop.java" />
+        <ignore path="src/com/example/fragment/Engadget.java" />
+        <ignore path="src/com/example/fragment/WeiboHot.java" />
+        <ignore path="src/com/example/net/CnbetaTop.java" />
+        <ignore path="src/com/example/net/MainActivity.java" />
+        <ignore path="src/com/example/net/PopularActivity.java" />
+    </issue>
+    <issue id="SetJavaScriptEnabled">
+        <ignore path="src/com/example/net/NewsReader.java" />
+    </issue>
+</lint>
