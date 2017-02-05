@@ -1,28 +1,5 @@
 package com.example.fragment;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import com.example.adapter.MyAdapter;
-import com.example.adapter.MyAdapter.MyItemClickListener;
-import com.example.database.Article;
-import com.example.database.DbManager;
-import com.example.net.NewsReader;
-import com.example.net.R;
-import com.example.swiperefresh.SwipeRefreshLayout;
-import com.example.swiperefresh.SwipeRefreshLayout.OnLoadListener;
-import com.example.swiperefresh.SwipeRefreshLayout.OnRefreshListener;
-import com.example.util.Utility;
-
 import android.R.integer;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -35,11 +12,34 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.example.adapter.MyAdapter;
+import com.example.adapter.MyAdapter.MyItemClickListener;
+import com.example.database.Article;
+import com.example.database.DbManager;
+import com.example.net.NewsReader;
+import com.example.net.R;
+import com.example.swiperefresh.SwipeRefreshLayout;
+import com.example.swiperefresh.SwipeRefreshLayout.OnLoadListener;
+import com.example.swiperefresh.SwipeRefreshLayout.OnRefreshListener;
+import com.example.util.Utility;
+
+import org.json.JSONException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CnbetaNews extends Fragment implements OnRefreshListener,
 		OnLoadListener {
@@ -144,6 +144,7 @@ public class CnbetaNews extends Fragment implements OnRefreshListener,
 						isCache = true;
 						preferences.edit().putBoolean("isCache", isCache)
 								.commit();
+
 					}
 				}
 			} catch (JSONException e) {
@@ -240,25 +241,6 @@ public class CnbetaNews extends Fragment implements OnRefreshListener,
 			}
 		}
 	}
-
-	/*public class myStringRequest extends StringRequest{
-
-		public myStringRequest(int method, String url,
-				Listener<String> listener, ErrorListener errorListener) {
-			super(method, url, listener, errorListener);
-		}
-		
-		@Override
-		protected Response<String> parseNetworkResponse(NetworkResponse response) {
-			 String str = null;
-		        try {
-		            str = new String(response.data,"utf-8");
-		        } catch (UnsupportedEncodingException e) {
-		            e.printStackTrace();
-		        }
-			return Response.success(str, HttpHeaderParser.parseCacheHeaders(response));
-		}
-	}*/
 	
 	
 	@Override

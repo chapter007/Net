@@ -10,6 +10,7 @@ import com.example.util.PicCache.ImageCallBack;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -50,7 +51,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 		String gtitle=(String) list.get(position).get("title");
 		String gintro=(String) list.get(position).get("intro");
 		String imageURL=(String) list.get(position).get("topic");
-		
+		if (gintro=="") gintro="此新闻无简介，直接进去看看";
+		if (gtitle=="") gtitle="此新闻居然没标题！";
+		//Log.i("article title", "" + gtitle);
 		viewHolder.title.setText(gtitle);
 		viewHolder.intro.setText(gintro);
 		Bitmap bitmap = mPicCache.loadBitmap(viewHolder.image, imageURL,

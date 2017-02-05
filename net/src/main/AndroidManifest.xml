@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".NewsReader"/>
-        <activity android:name=".CnbetaTop"/>
+        <activity android:name=".ApiReader"/>
         <activity android:name=".Comment"/>
             
     </application>

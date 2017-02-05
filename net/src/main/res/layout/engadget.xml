@@ -6,7 +6,6 @@
     android:background="#006E5F">
 
 
-
         <ListView
             android:id="@+id/engadget_list"
             android:layout_width="wrap_content"

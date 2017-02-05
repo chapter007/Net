@@ -21,6 +21,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -33,13 +34,14 @@ import android.webkit.WebSettings;
 import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class NewsReader extends SwipeBackActivity{
 	private String title,article_id,cburl,engadget_comments,cbhtml;
 	private WebView webView,comments,get_web;
-	private ProgressBar loading;
+	private LinearLayout loading,comments_loading;
 	private FloatingActionButton mFAB;
     private HandlerThread handlerThread;
     private View MyDialog;
@@ -48,34 +50,34 @@ public class NewsReader extends SwipeBackActivity{
 		super.onCreate(savedInstanceState);
         webView=(WebView) findViewById(R.id.web);
         comments= (WebView) findViewById(R.id.comments);
-        loading=(ProgressBar) findViewById(R.id.loading);
+        loading= (LinearLayout) findViewById(R.id.loading);
 		loading.setVisibility(View.VISIBLE);
+        comments_loading= (LinearLayout) findViewById(R.id.comment_loading);
+        comments_loading.setVisibility(View.VISIBLE);
 		webView.setVisibility(View.GONE);
+
 		webView.setWebViewClient(new WebViewClient());
 		WebSettings webSettings=webView.getSettings();
-		webSettings.setJavaScriptEnabled(true);
 		webSettings.setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
-
+		webSettings.setJavaScriptEnabled(true);
 		Intent intent=getIntent();
 		article_id=intent.getStringExtra("href");
 		title=intent.getStringExtra("title");
 		getSupportActionBar().setTitle(title);
         cburl="http://www.cnbeta.com"+article_id;
-		if (article_id.contains("http")) {
-			Getengadget taskGetengadget=new Getengadget();
-			taskGetengadget.execute(article_id);
-		}else {
-            get_web=new WebView(NewsReader.this);
-            get_web.getSettings().setJavaScriptEnabled(true);
-            get_web.addJavascriptInterface(new InJavaScriptLocalObj(),"local_obj");
-            get_web.setWebViewClient(new MyWebViewClient());
 
-            handlerThread=new HandlerThread("handler_thread");
-            handlerThread.start();//创建了一个新的线程
-			Getweb task=new Getweb();
-			task.execute(cburl);
-            get_web.loadUrl(cburl);
-		}
+		get_web=new WebView(NewsReader.this);
+		get_web.addJavascriptInterface(new InJavaScriptLocalObj(), "myObj");
+		get_web.setWebViewClient(new MyWebViewClient());
+		get_web.getSettings().setJavaScriptEnabled(true);
+		handlerThread=new HandlerThread("handler_thread");
+		handlerThread.start();//创建了一个新的线程
+		Getweb task=new Getweb();
+
+		task.execute(cburl);
+
+		//get_web.loadUrl(cburl);
+
 	}
 	
 	
@@ -84,7 +86,7 @@ public class NewsReader extends SwipeBackActivity{
 			protected String doInBackground(String... params) {
 				String url=params[0];
 				Element html = null;
-				try {
+				try {//获取正文内容
 					Document document=Jsoup.connect(url).timeout(10000).get();
 					Element article_content=document.select("section.article_content").first();
 					if (article_content!=null) {
@@ -99,6 +101,7 @@ public class NewsReader extends SwipeBackActivity{
 							}
 						}
 						html.select("div.introduction>div").first().remove();
+
 					}else {
 						return null;
 					}
@@ -106,17 +109,23 @@ public class NewsReader extends SwipeBackActivity{
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				return html.toString();
+                if(html!=null){
+                    return html.toString();
+                }else{
+                    return "no content";
+                }
+
 			}
 			
 			@Override
 			protected void onPostExecute(String result) {
 				webView.setVisibility(View.VISIBLE);
 				loading.setVisibility(View.GONE);
+				cbhtml=result;
 				if (result!=null) {
 					webView.loadDataWithBaseURL("", result, "text/html", "utf-8", "");
 				}else {
-					Toast.makeText(NewsReader.this, "û�л�ȡ������", Toast.LENGTH_SHORT).show();
+					Toast.makeText(NewsReader.this, "no content", Toast.LENGTH_SHORT).show();
 				}
 				
 				super.onPostExecute(result);
@@ -152,6 +161,7 @@ public class NewsReader extends SwipeBackActivity{
 							e_Img.attr("style", "width:100%");
 						}
 					}
+
 				}else {
 					return null;
 				}
@@ -207,6 +217,7 @@ public class NewsReader extends SwipeBackActivity{
                 comments.post(new Runnable() {
                     @Override
                     public void run() {
+                        comments_loading.setVisibility(View.GONE);
                         comments.loadDataWithBaseURL("", comment.toString(), "text/html", "utf-8", "");
                     }
                 });
@@ -227,13 +238,15 @@ public class NewsReader extends SwipeBackActivity{
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            Log.d("myWebView", "onFinished");
-            view.loadUrl("javascript:window.local_obj.showSource(document.getElementsByTagName('html')[0].innerHTML);");
-            super.onPageFinished(view, url);
+			view.loadUrl("javascript:window.myObj.showSource(document.getElementsByTagName('html')[0].innerHTML);");
+			Log.d("myWebView", "onFinished" + url);
+			//这个网页加载的太慢了
+			super.onPageFinished(view, url);
         }
     }
 
-    final class InJavaScriptLocalObj{
+	class InJavaScriptLocalObj{
+
         @JavascriptInterface
         public void showSource(final String html){//这是和js交互的方法
             cbhtml=html;
@@ -250,4 +263,10 @@ public class NewsReader extends SwipeBackActivity{
             msg.sendToTarget();
         }
     }
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		handlerThread.quit();
+	}
 }

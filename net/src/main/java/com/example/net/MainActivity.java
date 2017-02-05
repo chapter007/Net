@@ -6,20 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.fragment.CnbetaFrame;
-import com.example.fragment.CnbetaNews;
-import com.example.fragment.CnbetaTop;
-import com.example.fragment.Engadget;
 import com.example.fragment.EngadgetFrame;
-import com.example.fragment.WeiboHot;
+import com.example.fragment.WeiboHotFrame;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -42,12 +35,6 @@ public class MainActivity extends AppCompatActivity{
 		setContentView(R.layout.activity_frame);
 		mDrawer=(DrawerLayout) findViewById(R.id.left_drawer);
 		mNews=(ListView) findViewById(R.id.news_list);
-		/*mToogle=new ActionBarDrawerToggle(MainActivity.this, mDrawer,
-				mToolbar, 0,0);
-		mToogle.setDrawerIndicatorEnabled(true);
-		mToogle.syncState();
-		mDrawer.setDrawerListener(mToogle);*/
-        //initViewPagerAndTabs();
 		
 		CnbetaFrame cbFrame=new CnbetaFrame();
 		getSupportFragmentManager().beginTransaction()
@@ -60,11 +47,11 @@ public class MainActivity extends AppCompatActivity{
         map.put("content","cnbeta");
         data.add(map);
         Map<String,Object> map1=new HashMap<String, Object>();
-        map1.put("icon", R.drawable.engadget);
-        map1.put("content","engadget");
+        map1.put("icon", R.drawable.zhihu);
+        map1.put("content","zhihuDay");
         data.add(map1);
         Map<String,Object> map2=new HashMap<String, Object>();
-        map2.put("icon", R.drawable.ifanr);
+        map2.put("icon", R.drawable.weibo);
         map2.put("content","aikj");
         data.add(map2);
         SimpleAdapter adapter=new SimpleAdapter(this,data,R.layout.news_list,
@@ -83,8 +70,8 @@ public class MainActivity extends AppCompatActivity{
 					CnbetaFrame cbFrame=new CnbetaFrame();
 					fragmentChange(R.id.frame, cbFrame);
 				}else if (arg2==2) {
-					WeiboHot weiboHot=new WeiboHot();
-					fragmentChange(R.id.frame, weiboHot);
+					WeiboHotFrame wbFrame=new WeiboHotFrame();
+					fragmentChange(R.id.frame, wbFrame);
 				}
 			}
 		});
@@ -102,10 +89,5 @@ public class MainActivity extends AppCompatActivity{
 	protected void onDestroy() {
 		super.onDestroy();
 	}
-
-	/*@Override
-	protected int getLayoutResource() {
-		return R.layout.activity_frame;
-	}*/
 
 }

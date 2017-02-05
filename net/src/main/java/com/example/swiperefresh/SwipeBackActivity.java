@@ -6,6 +6,7 @@ import com.example.net.ToolBar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 
@@ -30,7 +31,11 @@ public class SwipeBackActivity extends ToolBar {
 	protected int getLayoutResource() {
 		return R.layout.newsreader;
 	}
-	 
 
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+	}
 }
 

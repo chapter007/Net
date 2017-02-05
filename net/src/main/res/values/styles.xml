@@ -3,11 +3,11 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:windowIsTranslucent">true</item> 
+        <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowAnimationStyle">@style/animation_translucent_translate</item>
+        <!--<item name="android:windowAnimationStyle">@style/animation_translucent_translate</item>-->
  		<item name="colorPrimary">#006E5F</item>
-        <item name="colorPrimaryDark">#006E5F</item>
+        <item name="colorPrimaryDark">#ff154934</item>
         <item name="colorAccent">#00BFFF</item>
     </style>
 
@@ -15,6 +15,5 @@
         <item name="android:windowEnterAnimation">@anim/base_slide_right_in</item>  
         <item name="android:windowExitAnimation">@anim/base_slide_right_out</item>  
     </style>
-    
-     
+
 </resources>

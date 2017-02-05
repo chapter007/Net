@@ -121,8 +121,8 @@ public class SwipeBackLayout extends FrameLayout {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		switch (event.getAction()) {
-		case MotionEvent.ACTION_MOVE:
-			int moveX = (int) event.getRawX();
+		case MotionEvent.ACTION_MOVE://手指在屏幕上滑动
+			int moveX = (int) event.getRawX();//滑动的x轴距离
 			int deltaX = tempX - moveX;
 			tempX = moveX;
 			if (moveX - downX > mTouchSlop
@@ -130,12 +130,14 @@ public class SwipeBackLayout extends FrameLayout {
 				isSilding = true;
 			}
 			if (moveX - downX >= 0 && isSilding) {
-				mContentView.scrollBy(deltaX, 0);
+				mContentView.scrollBy(deltaX, 0);//scrollby方法，让view移动到指定位置，y控制的是上下偏移
+                //我让delta*2使得滑动小段距离即可返回
 			}
 			break;
 		case MotionEvent.ACTION_UP:
 			isSilding = false;
-			if (mContentView.getScrollX() <= -viewWidth / 2) {
+
+			if (mContentView.getScrollX() <= -viewWidth / 10) {
 				isFinish = true;
 				scrollRight();
 			} else {
@@ -147,7 +149,6 @@ public class SwipeBackLayout extends FrameLayout {
 
 		return true;
 	}
-	
 
 	private void getAlLViewPager(List<ViewPager> mViewPagers, ViewGroup parent){
 		int childCount = parent.getChildCount();
@@ -173,7 +174,6 @@ public class SwipeBackLayout extends FrameLayout {
 		}
 	}
 
-
 	private void getAlLWebViews(List<WebView> mWebViews, ViewGroup parent){
 		int childCount = parent.getChildCount();
 		for(int i=0; i<childCount; i++){
@@ -185,8 +185,6 @@ public class SwipeBackLayout extends FrameLayout {
 			}
 		}
 	}
-	
-	
 
 	private WebView getTouchWebView(List<WebView> mWebViews, MotionEvent ev){
 		if(mWebViews == null || mWebViews.size() == 0){
@@ -207,7 +205,6 @@ public class SwipeBackLayout extends FrameLayout {
 
 		return null;
 	}
-	
 
 	private ViewPager getTouchViewPager(List<ViewPager> mViewPagers, MotionEvent ev){
 		if(mViewPagers == null || mViewPagers.size() == 0){
@@ -223,7 +220,8 @@ public class SwipeBackLayout extends FrameLayout {
 		}
 		return null;
 	}
-	private HorizontalScrollView getTouchHorScrollerView(List<HorizontalScrollView> mScrollerView, MotionEvent ev){
+
+    private HorizontalScrollView getTouchHorScrollerView(List<HorizontalScrollView> mScrollerView, MotionEvent ev){
 		if(mScrollerView == null || mScrollerView.size() == 0){
 			return null;
 		}
@@ -254,7 +252,6 @@ public class SwipeBackLayout extends FrameLayout {
 	protected void dispatchDraw(Canvas canvas) {
 		super.dispatchDraw(canvas);
 		if (mShadowDrawable != null && mContentView != null) {
-
 			int left = mContentView.getLeft()
 					- mShadowDrawable.getIntrinsicWidth();
 			int right = left + mShadowDrawable.getIntrinsicWidth();
@@ -267,15 +264,12 @@ public class SwipeBackLayout extends FrameLayout {
 
 	}
 
-
-
 	private void scrollRight() {
 		final int delta = (viewWidth + mContentView.getScrollX());
 		mScroller.startScroll(mContentView.getScrollX(), 0, -delta + 1, 0,
 				Math.abs(delta));
 		postInvalidate();
 	}
-
 
 	private void scrollOrigin() {
 		int delta = mContentView.getScrollX();
@@ -295,6 +289,5 @@ public class SwipeBackLayout extends FrameLayout {
 			}
 		}
 	}
-
 
 }

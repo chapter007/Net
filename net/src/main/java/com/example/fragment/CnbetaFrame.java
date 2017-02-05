@@ -29,7 +29,6 @@ public class CnbetaFrame extends Fragment{
 
 	private ViewPager viewPager;
 	private ArrayList<Fragment> views;
-	//private SlidingTabLayout slidingtabLayout;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

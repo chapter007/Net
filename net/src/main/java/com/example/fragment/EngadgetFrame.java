@@ -38,7 +38,7 @@ public class EngadgetFrame extends Fragment{
     private void initToolbar(View view) {
         Toolbar mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         //mToolbar.setNavigationIcon(R.drawable.ic_menu_white_48dp);
-        mToolbar.setTitle("ENGADGET");
+        mToolbar.setTitle("ZHIHUDAY");
         DrawerLayout mDrawer= (DrawerLayout) getActivity().findViewById(R.id.left_drawer);
         ActionBarDrawerToggle mToogle=new ActionBarDrawerToggle(getActivity(),mDrawer,mToolbar,0,0);
         mToogle.setDrawerIndicatorEnabled(true);
@@ -51,9 +51,7 @@ public class EngadgetFrame extends Fragment{
         PagerAdapter pagerAdapter = new PagerAdapter(getChildFragmentManager());
         Engadget engadget=new Engadget();
         pagerAdapter.addFragment(engadget, "主页");
-        //pagerAdapter.addFragment(mCnbetaTop, "TOP10");
         viewPager.setAdapter(pagerAdapter);
-
     }
 
     static class PagerAdapter extends FragmentPagerAdapter {

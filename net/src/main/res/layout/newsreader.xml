@@ -13,15 +13,36 @@
 
         <include layout="@layout/toolbar" />
 
-        <ProgressBar
-            android:id="@+id/loading"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:id="@+id/loading">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="内容加载中......"
+                android:textSize="20sp"/>
+        </LinearLayout>
 
         <WebView
             android:id="@+id/web"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/comment_loading">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="评论加载中...."
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+
 
         <WebView
             android:layout_width="match_parent"

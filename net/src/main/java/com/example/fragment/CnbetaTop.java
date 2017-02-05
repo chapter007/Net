@@ -72,7 +72,7 @@ public class CnbetaTop extends Fragment implements
 		if (Utility.isNetworkConnected(getActivity())) {
 			new getNews().execute();
 		} else {
-			Toast.makeText(getActivity(), "û������", Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), "网络未连接", Toast.LENGTH_LONG).show();
 		}
 
 		adapter = new MyAdapter(getActivity(), data);
@@ -111,12 +111,12 @@ public class CnbetaTop extends Fragment implements
 				for (Element item : items) {
 					Map<String, Object> map = new HashMap<String, Object>();
 					Element titleEle = item.select("a").first();
-					String title = titleEle.text();// �õ��˱���
-					String href = titleEle.attr("href");// �õ�����
+					String title = titleEle.text();
+					String href = titleEle.attr("href");
 					Element picEle = item.select("img").first();
-					String picSrc = picEle.attr("src");// �õ���ͼƬ����
+					String picSrc = picEle.attr("src");
 					Element infoEle = item.select("span.newsinfo").first();
-					String info = infoEle.html();// �õ��˼������
+					String info = infoEle.html();
 					info = info.replaceAll("<.\\w*>||&nbsp", "");
 					map.put("title", title);
 					map.put("topic", picSrc);
@@ -141,14 +141,14 @@ public class CnbetaTop extends Fragment implements
 
 	@Override
 	public void onRefresh() {
-		Toast.makeText(getActivity(), "û���µ�����", Toast.LENGTH_SHORT)
+		Toast.makeText(getActivity(), "无新内容", Toast.LENGTH_SHORT)
 				.show();
 		swipeLayout.setRefreshing(false);
 	}
 
 	@Override
 	public void onLoad() {
-		Toast.makeText(getActivity(), "û�и�����", Toast.LENGTH_SHORT)
+		Toast.makeText(getActivity(), "正在刷新", Toast.LENGTH_SHORT)
 		.show();
 		swipeLayout.setLoading(false);
 	}

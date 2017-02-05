@@ -12,8 +12,8 @@
         android:orientation="horizontal"
         android:id="@+id/content">
     	<ImageView 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:id="@+id/item_img"/>
     	
     	<TextView 

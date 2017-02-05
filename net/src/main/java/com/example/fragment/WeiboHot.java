@@ -2,7 +2,14 @@ package com.example.fragment;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -16,23 +23,29 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.database.Article;
 import com.example.net.NewsReader;
 import com.example.net.R;
 import com.example.swiperefresh.SwipeRefreshLayout;
 import com.example.swiperefresh.SwipeRefreshLayout.OnLoadListener;
 import com.example.swiperefresh.SwipeRefreshLayout.OnRefreshListener;
+import com.example.util.Utility;
 
 import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
+import android.inputmethodservice.Keyboard;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,8 +60,11 @@ public class WeiboHot extends Fragment implements OnRefreshListener,OnLoadListen
 
 	private ListView weibo_list;
 	private SwipeRefreshLayout swipeLayout;
-	private String url="http://d.weibo.com/";
-	
+	private String fun="http://japi.juhe.cn/joke/content/list.from?sort=&page=&pagesize=10&time=1418816972&key=970999893fe2e8456cbb6eb9730c39e5";
+	private RequestQueue mRequestQueue;
+	private WeiboHot mInstance;
+	private List<Map<String, Object>> fundata = new ArrayList<Map<String, Object>>();
+
 	@SuppressLint("JavascriptInterface")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,98 +78,72 @@ public class WeiboHot extends Fragment implements OnRefreshListener,OnLoadListen
 				android.R.color.holo_green_light,
 				android.R.color.holo_blue_bright,
 				android.R.color.holo_orange_light);
-		//new getWeibo().execute();
-		WebView gethtml=new WebView(getActivity());
-		gethtml.getSettings().setJavaScriptEnabled(true);
-		gethtml.addJavascriptInterface(new InJavaScriptLocalObj(), "local_obj");
-		gethtml.setWebViewClient(new myWebViewClient());
-		gethtml.loadUrl(url);
-		
+		new getWeibo().execute();
+		mInstance=this;
 		
 		return view;
 	}
-	
-	class myWebViewClient extends WebViewClient{
-		public boolean shouldOverrideUrlLoading(WebView view, String url) {   
-            view.loadUrl(url);   
-            return true;
-        }  
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            Log.d("WebView","onPageStarted");
-            super.onPageStarted(view, url, favicon);
-        }    
-        public void onPageFinished(WebView view, String url) {
-            Log.d("WebView","onPageFinished ");
-            view.loadUrl("javascript:window.local_obj.showSource('<head>'+" +
-                    "document.getElementsByTagName('html')[0].innerHTML+'</head>');");
-            super.onPageFinished(view, url);
-        }
-	}
-	
-	final class InJavaScriptLocalObj {
-        public void showSource(String html) {
-            Log.d("HTML", html);
-        }
-    }
-	
+
+
 	public class getWeibo extends AsyncTask<String, integer, String>{
 
 		@Override
 		protected String doInBackground(String... params) {
-			try {
-				parseWeibo(url);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			if (Utility.isNetworkConnected(getActivity())) {
+				JsonObjectRequest jsonObjectRequest =new JsonObjectRequest(Request.Method.GET,fun,null,
+						new Listener<JSONObject>() {
+							@Override
+							public void onResponse(JSONObject  jsonObject) {
+								try {
+									if (jsonObject.getString("error_code").equals("0")){
+										JSONObject result=jsonObject.getJSONObject("result");
+										JSONArray data= (JSONArray) result.get("data");
+										Log.i("data",""+data);
+										for (int i=0;i<data.length();i++){
+											Map<String, Object> map = new HashMap<String, Object>();
+											JSONObject object= (JSONObject) data.get(i);
+											String content=object.getString("content");
+											String updatetime=object.getString("updatetime");
+											map.put("content",content);
+											map.put("updatetime",updatetime);
+											fundata.add(map);
+										}
+									}
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
+
+							}
+						}, new ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError volleyError) {
+
+					}
+				});
+
+				mInstance.addToRequestQueue(jsonObjectRequest, "test_volley");
+            }
 			return null;
 		}
 		
 	}
-	
-	public void parseWeibo(String url) throws IOException{
-		RequestQueue mQueue = Volley.newRequestQueue(getActivity());
-		myStringRequest stringRequest = new myStringRequest(Request.Method.GET,url,
-				new Response.Listener<String>() {
-					@Override
-					public void onResponse(String response) {
-						Document document=Jsoup.parse(response);
-						Elements weibos=document.select("div.WB_cardwrap.WB_feed_type");
-						for (Element weibo : weibos) {
-							String pic=weibo.select("img.W_face_radius").first().attr("src");
-							String user=weibo.select("a.W_f14").first().text();
-							Log.i("userName", user);
-						}
-					}
-				}, new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-						Log.e("TAG", error.getMessage(), error);
-					}
-				});
-		mQueue.add(stringRequest);
+
+
+	public <T> void addToRequestQueue(Request<T> req,String tag){
+		req.setTag(TextUtils.isEmpty(tag) ? "test tag" : tag);
+		getRequestQueue().add(req);
 	}
-	
-	public class myStringRequest extends StringRequest{
-		public myStringRequest(int method, String url,
-				Listener<String> listener, ErrorListener errorListener) {
-			super(method, url, listener, errorListener);
+
+	public RequestQueue getRequestQueue(){
+		if (mRequestQueue==null){
+			mRequestQueue= Volley.newRequestQueue(getActivity().getApplicationContext());
 		}
-		
-		@Override
-		protected Response<String> parseNetworkResponse(NetworkResponse response) {
-			 String str = null;
-		        try {
-		            str = new String(response.data,"GBK");
-		        } catch (UnsupportedEncodingException e) {
-		            e.printStackTrace();
-		        }
-			return Response.success(str, HttpHeaderParser.parseCacheHeaders(response));
-		}
+		return mRequestQueue;
 	}
-	
+
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("WeiboHot");
 		super.onActivityCreated(savedInstanceState);
 	}
 
@@ -166,5 +156,17 @@ public class WeiboHot extends Fragment implements OnRefreshListener,OnLoadListen
 	public void onRefresh() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void parseData(String Rowdata) throws JSONException {
+		Log.i("weibo",""+ Rowdata);
+		if (Rowdata!=null) {
+			Document document = Jsoup.parse(Rowdata);//Rowdata是js代码，还没能获取到内容
+			Elements allnews_all = document.getElementsByClass("pt_ul");//没有这个标签
+			Elements allitem = allnews_all.select("li.pt_li");
+			Log.i("item",""+allitem);
+			Utility.getFileFromBytes(Rowdata,"/sdcard/weibo.html");
+
+		}
 	}
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.swiperefresh.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_refresh_weibo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#006E5F" >
+    
+    <ListView 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/weibo_list"/>
+    
+</com.example.swiperefresh.SwipeRefreshLayout>
+<!-- From: file:/D:/Apk_Source/Net1/net/src/main/res/layout/weibohot.xml -->
