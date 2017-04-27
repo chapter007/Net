@@ -35,7 +35,7 @@ public class WeiboHotFrame extends Fragment {
 
     private void initToolbar(View view) {
         Toolbar mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        mToolbar.setTitle("WEIBO");
+        mToolbar.setTitle("还没想好放什么");
         DrawerLayout mDrawer= (DrawerLayout) getActivity().findViewById(R.id.left_drawer);
         ActionBarDrawerToggle mToogle=new ActionBarDrawerToggle(getActivity(),mDrawer,mToolbar,0,0);
         mToogle.setDrawerIndicatorEnabled(true);

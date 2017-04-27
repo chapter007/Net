@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "D:\\Apk_Source\\Net1\\net\\build\\intermediates\\res\\merged\\debug\\menu\\main.xml",
+        "source": "D:\\Apk_Source\\Net1\\net\\src\\main\\res\\menu\\main.xml"
+    },
+    {
+        "merged": "D:\\Apk_Source\\Net1\\net\\build\\intermediates\\res\\merged\\debug\\menu\\global.xml",
+        "source": "D:\\Apk_Source\\Net1\\net\\src\\main\\res\\menu\\global.xml"
+    }
+]

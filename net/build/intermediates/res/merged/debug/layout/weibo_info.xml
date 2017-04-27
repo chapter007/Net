@@ -23,4 +23,3 @@
         android:layout_height="wrap_content"
         android:id="@+id/weibo_content"/>
 </LinearLayout>
-<!-- From: file:/D:/Apk_Source/Net1/net/src/main/res/layout/weibo_info.xml -->

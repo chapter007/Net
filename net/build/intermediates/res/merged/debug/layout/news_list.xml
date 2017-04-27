@@ -17,4 +17,4 @@
         android:layout_marginLeft="40dp"
         android:textColor="#000"
         android:id="@+id/Lcontent"/>
-</LinearLayout><!-- From: file:/D:/Apk_Source/Net1/net/src/main/res/layout/news_list.xml -->
+</LinearLayout>

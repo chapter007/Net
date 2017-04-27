@@ -7,6 +7,8 @@ ADDED from D:\Apk_Source\Net1\net\src\main\AndroidManifest.xml:2:1-34:12
 		INJECTED from D:\Apk_Source\Net1\net\src\main\AndroidManifest.xml
 	android:versionName
 		ADDED from D:\Apk_Source\Net1\net\src\main\AndroidManifest.xml:5:5-30
+		INJECTED from D:\Apk_Source\Net1\net\src\main\AndroidManifest.xml
+		INJECTED from D:\Apk_Source\Net1\net\src\main\AndroidManifest.xml
 	android:versionCode
 		ADDED from D:\Apk_Source\Net1\net\src\main\AndroidManifest.xml:4:5-28
 		INJECTED from D:\Apk_Source\Net1\net\src\main\AndroidManifest.xml
@@ -15,14 +17,10 @@ ADDED from D:\Apk_Source\Net1\net\src\main\AndroidManifest.xml:2:1-34:12
 		ADDED from D:\Apk_Source\Net1\net\src\main\AndroidManifest.xml:2:11-69
 uses-sdk
 ADDED from D:\Apk_Source\Net1\net\src\main\AndroidManifest.xml:7:5-9:41
-MERGED from [com.android.support:appcompat-v7:23.0.1] D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:23.0.1] D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:design:23.0.1] D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\design\23.0.1\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:23.0.1] D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:appcompat-v7:23.0.1] D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:23.0.1] D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:recyclerview-v7:23.0.1] D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.0.1\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:23.0.1] D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:design:23.0.1] C:\Users\zhangjie\.android\build-cache\e555e96039c14418ba019792706985f662aee72b\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:appcompat-v7:23.0.1] C:\Users\zhangjie\.android\build-cache\089d408391a319ef2eaaae07a281ea6c56eb3b15\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:23.0.1] C:\Users\zhangjie\.android\build-cache\12447f9635177b167cfc24f160e427f86635dbe4\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.0.1] C:\Users\zhangjie\.android\build-cache\8330b3db21e8dad09955a3dbcfd4ca28d92f2145\output\AndroidManifest.xml:20:5-43
 	android:targetSdkVersion
 		ADDED from D:\Apk_Source\Net1\net\src\main\AndroidManifest.xml:9:9-38
 		INJECTED from D:\Apk_Source\Net1\net\src\main\AndroidManifest.xml
@@ -45,13 +43,9 @@ ADDED from D:\Apk_Source\Net1\net\src\main\AndroidManifest.xml:13:5-78
 		ADDED from D:\Apk_Source\Net1\net\src\main\AndroidManifest.xml:13:22-76
 application
 ADDED from D:\Apk_Source\Net1\net\src\main\AndroidManifest.xml:14:5-32:19
-MERGED from [com.android.support:appcompat-v7:23.0.1] D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:23.0.1] D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:design:23.0.1] D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\design\23.0.1\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:23.0.1] D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:appcompat-v7:23.0.1] D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:23.0.1] D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:23.0.1] D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:design:23.0.1] C:\Users\zhangjie\.android\build-cache\e555e96039c14418ba019792706985f662aee72b\output\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:appcompat-v7:23.0.1] C:\Users\zhangjie\.android\build-cache\089d408391a319ef2eaaae07a281ea6c56eb3b15\output\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.0.1] C:\Users\zhangjie\.android\build-cache\8330b3db21e8dad09955a3dbcfd4ca28d92f2145\output\AndroidManifest.xml:22:5-20
 	android:label
 		ADDED from D:\Apk_Source\Net1\net\src\main\AndroidManifest.xml:17:9-41
 	android:allowBackup

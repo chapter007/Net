@@ -14,4 +14,4 @@
         android:paddingTop="0dp"
         android:scrollbars="vertical" />
 
-</com.example.swiperefresh.SwipeRefreshLayout><!-- From: file:/D:/Apk_Source/Net1/net/src/main/res/layout/activity_main.xml -->
+</com.example.swiperefresh.SwipeRefreshLayout>

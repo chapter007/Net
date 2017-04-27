@@ -4,4 +4,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
     
-</com.example.swiperefresh.SwipeBackLayout><!-- From: file:/D:/Apk_Source/Net1/net/src/main/res/layout/base.xml -->
+</com.example.swiperefresh.SwipeBackLayout>

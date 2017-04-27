@@ -10,6 +10,8 @@ import org.jsoup.select.Elements;
 //import com.example.swiperefresh.SwipeBackActivity;
 import com.example.swiperefresh.SwipeBackActivity;
 import com.example.util.FloatingActionButton;
+import com.example.util.HttpCallbackListener;
+import com.example.util.HttpUtils;
 import com.example.util.Utility;
 
 import android.R.integer;
@@ -39,20 +41,55 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class NewsReader extends SwipeBackActivity{
-	private String title,article_id,cburl,engadget_comments,cbhtml;
-	private WebView webView,comments,get_web;
-	private LinearLayout loading,comments_loading;
-	private FloatingActionButton mFAB;
-    private HandlerThread handlerThread;
-    private View MyDialog;
+	private static final String TAG ="NewsReader";
+	private static final int UPDATE_UI = 1,GOT_COMMENT=2;
+	private String title;
+	private String cburl;
+	private WebView webView,comments,get_comment;
+	private LinearLayout loading,comments_loading,comments_background;
+
+	private Handler handler=new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what){
+				case UPDATE_UI:
+					webView.setVisibility(View.VISIBLE);
+					loading.setVisibility(View.GONE);
+					String result=msg.getData().getString("result");
+					if (result!=null) {
+						webView.loadDataWithBaseURL("", result, "text/html", "utf-8", "");
+					}else {
+						Toast.makeText(NewsReader.this, "no content", Toast.LENGTH_SHORT).show();
+					}
+					break;
+				case GOT_COMMENT:
+					String status=msg.getData().getString("status");
+					String comment=msg.getData().getString("comment");
+					if(comment!=null&&status=="ok") {
+						Document doc=Jsoup.parse(comment);
+						Element comment_e = doc.getElementById("comments-box");
+						Log.i(TAG, "handleMessage: "+comment_e);
+						comments_loading.setVisibility(View.GONE);
+                        comments_background.setVisibility(View.VISIBLE);
+						comments.loadDataWithBaseURL("", comment_e.toString(), "text/html", "utf-8", "");
+					}else{
+						Utility.showToast(NewsReader.this, "并没有获取到评论数据");
+					}
+					break;
+			}
+		}
+	};
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         webView=(WebView) findViewById(R.id.web);
         comments= (WebView) findViewById(R.id.comments);
         loading= (LinearLayout) findViewById(R.id.loading);
-		loading.setVisibility(View.VISIBLE);
+		comments_background= (LinearLayout) findViewById(R.id.comments_background);
         comments_loading= (LinearLayout) findViewById(R.id.comment_loading);
+
+        loading.setVisibility(View.VISIBLE);
+        comments_background.setVisibility(View.GONE);
         comments_loading.setVisibility(View.VISIBLE);
 		webView.setVisibility(View.GONE);
 
@@ -61,77 +98,59 @@ public class NewsReader extends SwipeBackActivity{
 		webSettings.setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
 		webSettings.setJavaScriptEnabled(true);
 		Intent intent=getIntent();
-		article_id=intent.getStringExtra("href");
 		title=intent.getStringExtra("title");
 		getSupportActionBar().setTitle(title);
-        cburl="http://www.cnbeta.com"+article_id;
+        cburl=intent.getStringExtra("href");
 
-		get_web=new WebView(NewsReader.this);
-		get_web.addJavascriptInterface(new InJavaScriptLocalObj(), "myObj");
-		get_web.setWebViewClient(new MyWebViewClient());
-		get_web.getSettings().setJavaScriptEnabled(true);
-		handlerThread=new HandlerThread("handler_thread");
-		handlerThread.start();//创建了一个新的线程
-		Getweb task=new Getweb();
+		get_comment=new WebView(NewsReader.this);
+		get_comment.addJavascriptInterface(new InJavaScriptLocalObj(), "myObj");
+		get_comment.setWebViewClient(new MyWebViewClient());
+		get_comment.getSettings().setJavaScriptEnabled(true);
+		get_comment.loadUrl(cburl);
 
-		task.execute(cburl);
+		//handlerThread=new HandlerThread("handler_thread");
+		//handlerThread.start();//创建了一个新的线程
 
-		//get_web.loadUrl(cburl);
+		/*Getweb task=new Getweb();
+		task.execute(cburl);*/
 
-	}
-	
-	
-	class Getweb extends AsyncTask<String, integer, String>{	
+		Log.i(TAG, "获取新闻主体内容");
+		HttpUtils.getResponseFromURL(cburl, new HttpCallbackListener() {
 			@Override
-			protected String doInBackground(String... params) {
-				String url=params[0];
-				Element html = null;
-				try {//获取正文内容
-					Document document=Jsoup.connect(url).timeout(10000).get();
-					Element article_content=document.select("section.article_content").first();
-					if (article_content!=null) {
-						Element Eintro=article_content.select("div.introduction").first();
-						Element content=article_content.select("div.content").first();
-						String newHtmlContent=Eintro.toString()+content.toString();
-						html=Jsoup.parse(newHtmlContent);
-						Elements ele_Img = html.getElementsByTag("img");
-						if (ele_Img.size() != 0){
-							for (Element e_Img : ele_Img) {
-								e_Img.attr("style", "width:100%");
-							}
+			public void onFinish(String response) {
+				Log.i(TAG, "onFinish: ");
+				Document document=Jsoup.parse(response);
+				Element html =null;
+				Element article_content=document.select("div.cnbeta-article").first();
+				if (article_content!=null) {
+					Element Eintro=article_content.select("div.article-summary>p").first();
+					Element content=article_content.select("div.article-content").first();
+					String newHtmlContent=Eintro.toString()+content.toString();
+					html =Jsoup.parse(newHtmlContent);
+					Elements ele_Img = html.getElementsByTag("img");
+					if (ele_Img.size() != 0){
+						for (Element e_Img : ele_Img) {
+							e_Img.attr("style", "width:100%");
 						}
-						html.select("div.introduction>div").first().remove();
-
-					}else {
-						return null;
 					}
-					
-				} catch (IOException e) {
-					e.printStackTrace();
 				}
-                if(html!=null){
-                    return html.toString();
-                }else{
-                    return "no content";
-                }
+
+				/*这里是子线程，不能直接操作ui，需要用到handler*/
+				Message message=new Message();
+				message.what=UPDATE_UI;
+				Bundle bundle=new Bundle();
+				bundle.putString("result",html.toString());
+				message.setData(bundle);
+				handler.sendMessage(message);
+			}
+
+			@Override
+			public void onError(Exception e) {
 
 			}
-			
-			@Override
-			protected void onPostExecute(String result) {
-				webView.setVisibility(View.VISIBLE);
-				loading.setVisibility(View.GONE);
-				cbhtml=result;
-				if (result!=null) {
-					webView.loadDataWithBaseURL("", result, "text/html", "utf-8", "");
-				}else {
-					Toast.makeText(NewsReader.this, "no content", Toast.LENGTH_SHORT).show();
-				}
-				
-				super.onPostExecute(result);
-			}
-			
-		}
+		});
+	}
+
 	
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -145,101 +164,23 @@ public class NewsReader extends SwipeBackActivity{
 		}
 	}
 
-	class Getengadget extends AsyncTask<String, integer, String>{
-		@Override
-		protected String doInBackground(String... params) {
-			String url=params[0];
-			Element article_content = null;
-            try {
-				Document document=Jsoup.connect(url).timeout(10000).get();
-                article_content=document.select("div[itemprop]").first();
-                engadget_comments=document.select("#comments").toString();
-                if (article_content!=null) {
-					Elements ele_Img = article_content.getElementsByTag("img");
-					if (ele_Img.size() != 0){
-						for (Element e_Img : ele_Img) {
-							e_Img.attr("style", "width:100%");
-						}
-					}
-
-				}else {
-					return null;
-				}
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			if (article_content!=null) {
-				return article_content.toString();
-			}else {
-				return null;
-			}
-		}
-		
-		@Override
-		protected void onPostExecute(String result) {
-			webView.setVisibility(View.VISIBLE);
-			loading.setVisibility(View.GONE);
-			if (result!=null&&engadget_comments!=null) {
-				webView.loadDataWithBaseURL("", result, "text/html", "utf-8", "");
-				comments.loadDataWithBaseURL("", engadget_comments, "text/html", "utf-8", "");
-			}else {
-				Toast.makeText(NewsReader.this, "没得到内容~", Toast.LENGTH_SHORT).show();
-			}
-			
-			super.onPostExecute(result);
-		}
-		
-	}
-
 	@Override
 	protected int getLayoutResource() {
 		return R.layout.newsreader;
 	}
 
-    class MyHandler extends Handler {
-        public MyHandler(){}
-
-        public MyHandler(Looper looper){
-            super(looper);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            Bundle bundle=msg.getData();
-            String status=bundle.getString("status");
-            Utility.log("handler?", status);
-            if(cbhtml!=null&&status=="ok") {
-                final Element comment = Jsoup.parse(cbhtml).select("div.commt_list").first();
-                comment.attr("style", "display:''");
-                comment.getElementsByClass("comment_avatars").remove();
-                Log.i("web comment", "" + comment);
-                comments.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        comments_loading.setVisibility(View.GONE);
-                        comments.loadDataWithBaseURL("", comment.toString(), "text/html", "utf-8", "");
-                    }
-                });
-            }else{
-                Utility.showToast(NewsReader.this, "并没有获取到评论数据");
-            }
-            super.handleMessage(msg);
-        }
-    }
-
     final class MyWebViewClient extends WebViewClient{
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            Log.d("myWebView", "onStart");
-            super.onPageStarted(view, url, favicon);
+			Log.i(TAG, "onPageStarted: ");
+			super.onPageStarted(view, url, favicon);
         }
 
         @Override
         public void onPageFinished(WebView view, String url) {
 			view.loadUrl("javascript:window.myObj.showSource(document.getElementsByTagName('html')[0].innerHTML);");
-			Log.d("myWebView", "onFinished" + url);
+			Log.i(TAG, "onPageFinished: ");
 			//这个网页加载的太慢了
 			super.onPageFinished(view, url);
         }
@@ -249,24 +190,26 @@ public class NewsReader extends SwipeBackActivity{
 
         @JavascriptInterface
         public void showSource(final String html){//这是和js交互的方法
-            cbhtml=html;
-            Log.d("html from WebView","~~"+cbhtml);
-            MyHandler myHandler=new MyHandler(handlerThread.getLooper());
-            Message msg =myHandler.obtainMessage();
+            Message msg =new Message();
+			msg.what=GOT_COMMENT;
             Bundle bundle=new Bundle();
-            if(cbhtml!=null){
+            if(html!=null){
                 bundle.putString("status","ok");
+				bundle.putString("comment",html);
             }else {
                 bundle.putString("status","no");
             }
             msg.setData(bundle);
-            msg.sendToTarget();
+			handler.sendMessage(msg);
         }
     }
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		handlerThread.quit();
+		comments.destroy();
+		get_comment.destroy();
+		webView.destroy();
+		Utility.log("myNews","quit");
 	}
 }

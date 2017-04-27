@@ -106,7 +106,7 @@ public class CnbetaTop extends Fragment implements
 				data.clear();
 				Document document = Jsoup.connect(
 						"http://www.cnbeta.com/top10.htm").timeout(100000).get();
-				Element hit_rank = document.select("div#hits_rank").first();
+				Element hit_rank = document.select("div.items-area").first();
 				Elements items=hit_rank.select("div.item");
 				for (Element item : items) {
 					Map<String, Object> map = new HashMap<String, Object>();
@@ -115,7 +115,7 @@ public class CnbetaTop extends Fragment implements
 					String href = titleEle.attr("href");
 					Element picEle = item.select("img").first();
 					String picSrc = picEle.attr("src");
-					Element infoEle = item.select("span.newsinfo").first();
+					Element infoEle = item.select("dd>p").first();
 					String info = infoEle.html();
 					info = info.replaceAll("<.\\w*>||&nbsp", "");
 					map.put("title", title);

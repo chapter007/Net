@@ -2,46 +2,76 @@
 <items version="2" >
 
     <item
+        is-multidex="false"
+        jar="D:\Apk_Source\Net1\net\libs\jsoup-1.8.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="580e4dd2a6125cc4037450b40623ac6a552c11df">
+        <dex dex="D:\Apk_Source\Net1\net\build\intermediates\pre-dexed\debug\jsoup-1.8.2_933c24ed3f93af10950830f45d3bb0a30e40ce6c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\zhangjie\.android\build-cache\12447f9635177b167cfc24f160e427f86635dbe4\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4356e230a981d1bbf047d848b91bc0d9b7c5bacc">
+        <dex dex="D:\Apk_Source\Net1\net\build\intermediates\pre-dexed\debug\classes_d8f46879bd69e2c1561c6eba70ac05773ca47e98.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="D:\android\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
         jumboMode="false"
-        revision="20.0.0"
+        optimize="true"
+        revision="25.0.2"
         sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="D:\Apk_Source\Net1\net\build\intermediates\pre-dexed\debug\support-annotations-23.0.1-72ddec30bd9262ea14ceba53e45a9b02b0d2d748.jar" />
+        <dex dex="D:\Apk_Source\Net1\net\build\intermediates\pre-dexed\debug\support-annotations-23.0.1_72ddec30bd9262ea14ceba53e45a9b02b0d2d748.jar" />
     </item>
     <item
-        jar="D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\design\23.0.1\jars\classes.jar"
+        is-multidex="false"
+        jar="C:\Users\zhangjie\.android\build-cache\8330b3db21e8dad09955a3dbcfd4ca28d92f2145\output\jars\classes.jar"
         jumboMode="false"
-        revision="20.0.0"
-        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
-        <dex dex="D:\Apk_Source\Net1\net\build\intermediates\pre-dexed\debug\classes-c06a5255ba625f15851af35ad9f1733cdefead92.jar" />
-    </item>
-    <item
-        jar="D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="D:\Apk_Source\Net1\net\build\intermediates\pre-dexed\debug\classes-eebd88b1c5cd6ac93ca60072cb228012ec8460ce.jar" />
-    </item>
-    <item
-        jar="D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="D:\Apk_Source\Net1\net\build\intermediates\pre-dexed\debug\internal_impl-23.0.1-7bc6d813899e2653cb483176968b0824a82e13c0.jar" />
-    </item>
-    <item
-        jar="D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
-        jumboMode="false"
-        revision="20.0.0"
+        optimize="true"
+        revision="25.0.2"
         sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="D:\Apk_Source\Net1\net\build\intermediates\pre-dexed\debug\classes-b13a5e01100b8f44fd99653e1bf9828445bca5ba.jar" />
+        <dex dex="D:\Apk_Source\Net1\net\build\intermediates\pre-dexed\debug\classes_19164c184472254511451283586c6995f0836c98.jar" />
     </item>
     <item
-        jar="D:\Apk_Source\Net1\net\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.0.1\jars\classes.jar"
+        is-multidex="false"
+        jar="C:\Users\zhangjie\.android\build-cache\e555e96039c14418ba019792706985f662aee72b\output\jars\classes.jar"
         jumboMode="false"
-        revision="20.0.0"
-        sha1="4356e230a981d1bbf047d848b91bc0d9b7c5bacc">
-        <dex dex="D:\Apk_Source\Net1\net\build\intermediates\pre-dexed\debug\classes-df3b10e1ef64b88a246b318fcb4b370e3cddd92f.jar" />
+        optimize="true"
+        revision="25.0.2"
+        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
+        <dex dex="D:\Apk_Source\Net1\net\build\intermediates\pre-dexed\debug\classes_f089cb264865a97001f8fa09565c2fc06f4f0ee9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\zhangjie\.android\build-cache\8330b3db21e8dad09955a3dbcfd4ca28d92f2145\output\jars\libs\internal_impl-23.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="D:\Apk_Source\Net1\net\build\intermediates\pre-dexed\debug\internal_impl-23.0.1_0b47197db5aca61da9b2894b000d2f69284573ec.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\zhangjie\.android\build-cache\089d408391a319ef2eaaae07a281ea6c56eb3b15\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="D:\Apk_Source\Net1\net\build\intermediates\pre-dexed\debug\classes_62070afff1acf8daccf06feb673b470d8d2b3540.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Apk_Source\Net1\net\libs\volley.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4a94601db9bdfb7dc60efabb3dea91a0675f591d">
+        <dex dex="D:\Apk_Source\Net1\net\build\intermediates\pre-dexed\debug\volley_eb83424560e24dd5f8055a0195fd1319dc81eda7.jar" />
     </item>
 
 </items>

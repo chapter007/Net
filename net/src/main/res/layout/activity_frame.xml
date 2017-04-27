@@ -21,10 +21,10 @@
 
         <FrameLayout
             android:id="@+id/nav"
-            android:layout_width="240dp"
+            android:layout_width="300dp"
             android:layout_height="match_parent"
             android:layout_gravity="left"
-            android:background="#fff" >
+            android:background="#fff">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,9 +37,9 @@
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/material"
-                        android:scaleType="fitXY"/>
+                        android:layout_height="200dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/material" />
                 </LinearLayout>
 
                 <ListView
@@ -47,7 +47,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="100dp"/>
+                    android:layout_marginTop="100dp" />
             </LinearLayout>
 
         </FrameLayout>

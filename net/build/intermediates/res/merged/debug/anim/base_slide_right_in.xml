@@ -5,4 +5,4 @@
         android:fromXDelta="100.0%"
         android:interpolator="@android:anim/decelerate_interpolator"
         android:toXDelta="0.0%" />
-</set><!-- From: file:/D:/Apk_Source/Net1/net/src/main/res/anim/base_slide_right_in.xml -->
+</set>

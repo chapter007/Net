@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity{
         data.add(map1);
         Map<String,Object> map2=new HashMap<String, Object>();
         map2.put("icon", R.drawable.weibo);
-        map2.put("content","aikj");
+        map2.put("content","还没想好放什么");
         data.add(map2);
         SimpleAdapter adapter=new SimpleAdapter(this,data,R.layout.news_list,
                 new String[]{"icon","content"},new int[]{R.id.Licon,R.id.Lcontent});

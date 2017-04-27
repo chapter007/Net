@@ -15,4 +15,4 @@
 			    android:id="@+id/list_popular"
 			    android:scrollbars="vertical"/>
 			
-		</com.example.swiperefresh.SwipeRefreshLayout><!-- From: file:/D:/Apk_Source/Net1/net/src/main/res/layout/activity_popular.xml -->
+		</com.example.swiperefresh.SwipeRefreshLayout>

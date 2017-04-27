@@ -12,4 +12,3 @@
         android:id="@+id/weibo_list"/>
     
 </com.example.swiperefresh.SwipeRefreshLayout>
-<!-- From: file:/D:/Apk_Source/Net1/net/src/main/res/layout/weibohot.xml -->

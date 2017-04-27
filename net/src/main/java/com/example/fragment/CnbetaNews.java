@@ -185,7 +185,6 @@ public class CnbetaNews extends Fragment implements OnRefreshListener,
 		protected void onPostExecute(String result) {
 			try {
 				parseData(Newdata, true);
-				
 				for (int i = 0; i < data.size(); i++) {
 					Article article = new Article();
 					article.title = (String) data.get(i).get("title");
@@ -213,8 +212,10 @@ public class CnbetaNews extends Fragment implements OnRefreshListener,
 				data.clear();
 			}
 			if (!isCache) {
-				Element allnews_all = document.getElementById("allnews_all");
-				allitem = allnews_all.select("div.items_area").first();
+				Element allnews_all = document.select("div.cnbeta-update-list").first();
+				String test=allnews_all.toString();
+
+				allitem = allnews_all.select("div.items-area").first();//没获取到，可能是cnbeta改版了
 			} else {
 				allitem = document;
 			}
@@ -222,13 +223,13 @@ public class CnbetaNews extends Fragment implements OnRefreshListener,
 				Elements items = allitem.getElementsByClass("item");
 				for (Element item : items) {
 					Map<String, Object> map = new HashMap<String, Object>();
-					Element titleEle = item.select("a").first();
+					Element titleEle = item.select("dl>dt>a").first();
 					if (titleEle != null) {
 						String title = titleEle.text();
 						String href = titleEle.attr("href");
 						Element picEle = item.select("img").first();
 						String picSrc = picEle.attr("src");
-						Element infoEle = item.select("span.newsinfo").first();
+						Element infoEle = item.select("dd>p").first();
 						String info = infoEle.html();
 						info = info.replaceAll("<.\\w*>|<a.+\">|&nbsp;|<div.+>|<span.+>", "");
 						map.put("title", title);

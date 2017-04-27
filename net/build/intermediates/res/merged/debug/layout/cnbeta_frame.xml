@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -32,4 +31,4 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-</android.support.design.widget.CoordinatorLayout><!-- From: file:/D:/Apk_Source/Net1/net/src/main/res/layout/cnbeta_frame.xml -->
+</android.support.design.widget.CoordinatorLayout>
